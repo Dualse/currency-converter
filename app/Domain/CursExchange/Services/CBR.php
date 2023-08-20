@@ -58,6 +58,7 @@ final class CBR implements CurrencyInfo
     /**
      * @param DateTime $date
      * @param string $charCode
+     * @param string $baseCurrencyChar
      * @return CurrencyDTO
      * @throws Exception
      */
@@ -71,5 +72,26 @@ final class CBR implements CurrencyInfo
         }
 
         return $currency;
+    }
+
+    public function getCurrency(DateTime $date, string $charCode, string $baseCurrencyChar = 'RUR'): float
+    {
+        $currencies = collect($this->getDaily($date));
+        $currency = $currencies->first(fn(CurrencyDTO $currency) => $currency->getCharCode() === $charCode);
+
+        if (!$currency) {
+            throw new Exception('Currency with char code ' . $charCode . ' not found.');
+        }
+
+        if ($baseCurrencyChar !== 'RUR') {
+            $baseCurrency = $currencies->first(fn(CurrencyDTO $currency) => $currency->getCharCode() === $baseCurrencyChar);
+
+            return floatval(
+                ($currency->getValue() / $currency->getNominal()) /
+                ($baseCurrency->getValue() / $baseCurrency->getNominal())
+            );
+        }
+
+        return floatval($currency->getValue() / $currency->getNominal());
     }
 }

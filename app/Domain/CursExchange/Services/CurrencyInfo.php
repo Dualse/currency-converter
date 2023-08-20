@@ -14,4 +14,6 @@ interface CurrencyInfo
     public function getDaily(DateTime $date): array;
 
     public function getDailyByCharCode(DateTime $date, string $charCode): CurrencyDTO;
+
+    public function getCurrency(DateTime $date, string $charCode, string $baseCurrencyChar): float;
 }
