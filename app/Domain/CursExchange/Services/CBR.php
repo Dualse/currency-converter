@@ -74,6 +74,13 @@ final class CBR implements CurrencyInfo
         return $currency;
     }
 
+    /**
+     * @param DateTime $date
+     * @param string $charCode
+     * @param string $baseCurrencyChar
+     * @return float
+     * @throws Exception
+     */
     public function getCurrency(DateTime $date, string $charCode, string $baseCurrencyChar = 'RUR'): float
     {
         $currencies = collect($this->getDaily($date));

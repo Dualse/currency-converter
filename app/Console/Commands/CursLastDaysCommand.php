@@ -34,6 +34,5 @@ class CursLastDaysCommand extends Command
             dispatch(new DailyExchangeCurrencyCursJob($date, $this->currencyInfo));
 
         }
-        $this->info("Count: {$count}");
     }
 }
