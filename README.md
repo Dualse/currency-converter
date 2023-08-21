@@ -4,6 +4,9 @@
 docker-compose build
 ```
 ```bash
+docker volume create redis
+```
+```bash
 docker-compose up -d
 ```
 ```bash
