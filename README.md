@@ -23,6 +23,7 @@ cp .env.example .env
 php artisan key:generate
 ```
 
+### Запуск теста
 ```bash
 php artisan test
 ```
