@@ -15,11 +15,6 @@ class CursLastDaysCommand extends Command
 
     protected $description = 'Command description';
 
-    public function __construct(private readonly CurrencyInfo $currencyInfo)
-    {
-        parent::__construct();
-    }
-
     public function handle(): void
     {
         $count = $this->argument('count');
@@ -31,7 +26,7 @@ class CursLastDaysCommand extends Command
         );
         foreach ($dates as $date) {
             $this->info('dispatch job by date: ' . $date->format('Y-m-d'));
-            dispatch(new DailyExchangeCurrencyCursJob($date, $this->currencyInfo));
+            dispatch(new DailyExchangeCurrencyCursJob($date));
 
         }
     }

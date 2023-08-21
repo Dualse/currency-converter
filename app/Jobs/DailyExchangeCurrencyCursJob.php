@@ -14,18 +14,15 @@ class DailyExchangeCurrencyCursJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(
-        private readonly DateTime     $date,
-        private readonly CurrencyInfo $currencyInfo
-    )
+    public function __construct(private readonly DateTime $date)
     {
     }
 
     //Количество попыток выполнить команду
-  //  public int $tries = 5;
+    //  public int $tries = 5;
 
-    public function handle(): void
+    public function handle(CurrencyInfo $currencyInfo): void
     {
-        $this->currencyInfo->getDaily($this->date);
+        $currencyInfo->getDaily($this->date);
     }
 }

@@ -31,4 +31,10 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'cbr' => [
+        'links' => [
+            'daily' => 'https://www.cbr.ru/scripts/XML_daily.asp',
+        ]
+    ]
+
 ];

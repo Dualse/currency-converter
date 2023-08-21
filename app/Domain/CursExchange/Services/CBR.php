@@ -3,13 +3,12 @@
 namespace App\Domain\CursExchange\Services;
 
 use App\Domain\CursExchange\DTO\CurrencyDTO;
+use Throwable;
 use Exception;
 use DateTime;
 
 final class CBR implements CurrencyInfo
 {
-    const DAILY = 'https://www.cbr.ru/scripts/XML_daily.asp';
-
     public function __construct(private readonly XmlReader $xmlReader)
     {
     }
@@ -38,7 +37,7 @@ final class CBR implements CurrencyInfo
         }
 
         try {
-            $data = $this->xmlReader->read(self::DAILY . '?' . http_build_query([
+            $data = $this->xmlReader->read(config('services.cbr.links.daily') . '?' . http_build_query([
                     'date_req' => $date->format('d/m/Y'),
                 ]));
 
@@ -52,7 +51,7 @@ final class CBR implements CurrencyInfo
                 name: $item['Name'],
                 value: floatval(str_replace(',', '.', $item['Value']))
             ), $data['Valute']);
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             throw new Exception('CBR daily exchange rate is not available. ' . $e->getMessage());
         }
     }
@@ -60,7 +59,6 @@ final class CBR implements CurrencyInfo
     /**
      * @param DateTime $date
      * @param string $charCode
-     * @param string $baseCurrencyChar
      * @return CurrencyDTO
      * @throws Exception
      */
