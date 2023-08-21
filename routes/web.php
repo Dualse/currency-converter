@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function (\App\Domain\CursExchange\Services\CurrencyInfo $currencyInfo) {
-    dd($currencyInfo->getCurrency(new DateTime(), 'USD', 'EUR'));
-
+Route::get('/', function () {
+    return view('welcome');
 });

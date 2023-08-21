@@ -33,7 +33,7 @@ return [
 
     'cbr' => [
         'links' => [
-            'daily' => 'https://www.cbr.ru/scripts/XML_daily.asp',
+            'daily' => env('CBR_DAILY_LINK', 'https://www.cbr.ru/scripts/XML_daily.asp'),
         ]
     ]
 
