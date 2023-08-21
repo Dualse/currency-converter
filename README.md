@@ -26,3 +26,13 @@ php artisan key:generate
 ```bash
 php artisan test
 ```
+
+### Запуск команды для получения курса валют за последние 180 дней
+```bash
+php artisan curs:last-days
+```
+
+### Запуск команды, которая слушает очередь
+```bash
+php artisan queue:work --tries=3
+```

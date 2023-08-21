@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Domain\CursExchange\Services\CBR;
 use App\Domain\CursExchange\Services\CurrencyInfo;
+use App\Domain\CursExchange\Services\SimpleXmlReader;
+use App\Domain\CursExchange\Services\XmlReader;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -21,8 +23,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->app->bind(CurrencyInfo::class, function () {
-            return new CBR();
-        });
+        $this->app->bind(XmlReader::class, SimpleXmlReader::class);
+        $this->app->bind(CurrencyInfo::class, CBR::class);
     }
 }
