@@ -33,6 +33,3 @@ services:
             - redis:/data
         ports:
             - ${REDIS_PORT}:6379
-volumes:
-    redis:
-        external: true

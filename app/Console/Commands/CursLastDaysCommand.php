@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\Domain\CursExchange\Services\CurrencyInfo;
 use App\Jobs\DailyExchangeCurrencyCursJob;
 use Illuminate\Console\Command;
 use DatePeriod;
