@@ -86,6 +86,10 @@ final class CBR implements CurrencyInfo
         if ($baseCurrencyChar !== 'RUR') {
             $baseCurrency = $currencies->first(fn(CurrencyDTO $currency) => $currency->getCharCode() === $baseCurrencyChar);
 
+            if (!$baseCurrency){
+                throw new Exception('Base currency with char code ' . $baseCurrencyChar . ' not found.');
+            }
+
             return floatval(
                 ($currency->getValue() / $currency->getNominal()) /
                 ($baseCurrency->getValue() / $baseCurrency->getNominal())
