@@ -1,0 +1,38 @@
+version: '3.5'
+services:
+    nginx:
+        image: nginx:alpine
+        container_name: tradernet-nginx
+        working_dir: /var/www/tradernet
+        volumes:
+            - ./:/var/www/tradernet
+            - ./.docker/nginx/tradernet.conf:/etc/nginx/conf.d/default.conf
+
+        links:
+            - php
+        depends_on:
+            - php
+        ports:
+            - 80:80
+
+    php:
+        container_name: tradernet-php
+        build:
+            context: .docker/php
+            dockerfile: Dockerfile
+        volumes:
+            - ./:/var/www/tradernet
+            - ./.docker/php/php.ini:/usr/local/etc/php/conf.d/z-php.ini
+        working_dir: /var/www/tradernet
+        ports:
+            - 9000:9000
+    redis:
+        container_name: tradernet-redis
+        build: .docker/redis
+        volumes:
+            - redis:/data
+        ports:
+            - ${REDIS_PORT}:6379
+volumes:
+    redis:
+        external: true

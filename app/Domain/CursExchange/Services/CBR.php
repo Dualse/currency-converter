@@ -10,6 +10,10 @@ final class CBR implements CurrencyInfo
 {
     const DAILY = 'https://www.cbr.ru/scripts/XML_daily.asp';
 
+    public function __construct(private readonly XmlReader $xmlReader)
+    {
+    }
+
     /**
      * @param DateTime $date
      * @return array<CurrencyDTO>
@@ -34,11 +38,9 @@ final class CBR implements CurrencyInfo
         }
 
         try {
-            $xml = simplexml_load_file(self::DAILY . '?' . http_build_query([
+            $data = $this->xmlReader->read(self::DAILY . '?' . http_build_query([
                     'date_req' => $date->format('d/m/Y'),
                 ]));
-            $json = json_encode($xml);
-            $data = json_decode($json, true);
 
             cache([
                 $cacheKey => $data['Valute']
@@ -93,7 +95,7 @@ final class CBR implements CurrencyInfo
         if ($baseCurrencyChar !== 'RUR') {
             $baseCurrency = $currencies->first(fn(CurrencyDTO $currency) => $currency->getCharCode() === $baseCurrencyChar);
 
-            if (!$baseCurrency){
+            if (!$baseCurrency) {
                 throw new Exception('Base currency with char code ' . $baseCurrencyChar . ' not found.');
             }
 
